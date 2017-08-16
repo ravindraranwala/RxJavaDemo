@@ -31,8 +31,15 @@ public class ObserveOnParallelThreadExample {
 			// Wrap it in an observable...
 			Observable<Integer> observable = Observable.from(emitList);
 
-			observable.flatMap(val -> Observable.<Integer> just(val).subscribeOn(Schedulers.computation())
-					.filter(num -> num % 2 == 0)).subscribe(
+			observable.flatMap(val -> Observable.<Integer> just(val).subscribeOn(Schedulers.io())
+					.filter(num -> num % 2 == 0).doOnNext((xx) -> {
+						System.out.println("parallel thread in: " + ThreadUtils.currentThreadName());
+						System.out.println("parallel: " + xx);
+						ThreadUtils.sleep(10); // Add a sleep to make sure we
+												// have a chance to see
+						// that the even number filter is executing in parallel.
+						System.out.println("parallel thread out: " + ThreadUtils.currentThreadName());
+					})).subscribe(
 							// onNext function
 							(i) -> {
 								System.out.println("onNext thread entr: " + ThreadUtils.currentThreadName());
