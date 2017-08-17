@@ -5,6 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class DataGenerator {
+    public static List<String> generateEnglishAlphabet() {
+
+        ArrayList<String> returnList = new ArrayList<>();
+        for( char ch = 'A' ; ch <= 'Z' ; ch++ ) {
+            returnList.add( new String( new char[] { ch } ) );
+        }
+        
+        return returnList;
+    }
 
     public static List<String> generateGreekAlphabet() {
 
