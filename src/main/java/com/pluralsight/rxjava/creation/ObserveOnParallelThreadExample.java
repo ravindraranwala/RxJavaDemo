@@ -6,7 +6,6 @@ import com.pluralsight.rxjava.util.DataGenerator;
 import com.pluralsight.rxjava.util.ThreadUtils;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
 public class ObserveOnParallelThreadExample {
