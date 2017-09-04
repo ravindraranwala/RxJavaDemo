@@ -6,6 +6,7 @@ import com.pluralsight.rxjava.util.DataGenerator;
 import com.pluralsight.rxjava.util.ThreadUtils;
 
 import rx.Observable;
+import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
 public class ObserveOnParallelThreadExample {
@@ -31,7 +32,7 @@ public class ObserveOnParallelThreadExample {
 			// Wrap it in an observable...
 			Observable<Integer> observable = Observable.from(emitList);
 
-			observable.flatMap(val -> Observable.<Integer> just(val).subscribeOn(Schedulers.io())
+			observable.subscribeOn(Schedulers.newThread()).flatMap(val -> Observable.<Integer> just(val).subscribeOn(Schedulers.computation())
 					.filter(num -> num % 2 == 0).doOnNext((xx) -> {
 						System.out.println("parallel thread in: " + ThreadUtils.currentThreadName());
 						System.out.println("parallel: " + xx);
